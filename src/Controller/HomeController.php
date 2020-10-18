@@ -4,10 +4,11 @@
 namespace App\Controller;
 
 
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class HomeController
+class HomeController extends AbstractController
 {
 
     /**
@@ -35,10 +36,10 @@ class HomeController
     public function articlepage ($titlearticle)
     {
 
-        return new Response(sprintf(
-            'blablabla "%t"',
-            $titlearticle
-        ));
+        return $this->render('article/show.html.twig' , [
+            'title' =>ucwords(str_replace('-', ' ',$titlearticle))
+        ]);
+
     }
 
 }
