@@ -1,0 +1,18 @@
+<div id="formContact">
+    <h2>Formulaire de contact</h2>
+
+    {% include 'flash_messages.html.twig' %}
+
+    <div class="ml-5  mr-5">
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+
+        <input type="submit" value="Envoyer" class="btn btn-block btn-primary" />
+        <div class="my-custom-class-for-errors">
+            {{ form_errors(form) }}
+        </div>
+        {{ form_end(form) }}
+    </div>
+</div>
+
+

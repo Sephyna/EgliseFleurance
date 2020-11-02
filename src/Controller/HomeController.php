@@ -12,21 +12,12 @@ class HomeController extends AbstractController
 {
 
     /**
-     * @Route("/")
+     * @Route("/" , name="home")
      */
     public function homepage ()
     {
 
-        return new Response('coucou');
-    }
-
-    /**
-     * @Route("/contact")
-     */
-    public function contactpage ()
-    {
-
-        return new Response('contact');
+        return $this->render('home/show.html.twig' );
     }
 
 

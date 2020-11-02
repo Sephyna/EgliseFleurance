@@ -1,0 +1,191 @@
+/*** navBar ***/
+
+
+.nav-bar {
+  transition: all 0.25s ease-in;
+
+}
+
+
+
+.nav-link, #slogan, #social-menu,   #right-menu a {
+  text-decoration:none;
+  color : white;
+
+}
+
+/** main link of navBar **/
+
+
+#left-menu li a {
+  text-decoration:none;
+  color: #fff;
+
+  }
+
+
+
+/*underline navbar on screenWidth >768px and scrollY = 0 */
+
+.menu-underline li a:after {
+  content: '';
+  display: block;
+  margin: auto;
+  height: 2px;
+  width: 0;
+  background: transparent;
+  transition: width .25s ease, background-color .25s ease;
+}
+.menu-underline #left-menu li a:hover:after {
+  width: 100%;
+  background: #fff;
+}
+.menu-underline #left-menu a:hover {
+  text-shadow:0px 0px 0px #fff, 1px 0px 0px #fff, -1px 0px 0px #fff;
+  background-size: 100% 100%;
+
+}
+
+
+
+
+
+/****icon social media****/
+
+.fa-facebook-square {
+  transition: all 0.25s ease-in;
+  color : #4267B2;
+}
+
+.fa-instagram {
+  transition: all 0.25s ease-in;
+  background : radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+}
+.fa-instagram:hover{
+  background : white;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.fa-youtube {
+  transition: all 0.25s ease-in;
+  color : #FF0000;
+}
+
+.fa-facebook-square:hover, .fa-youtube:hover, .navbar button{
+  color : white;
+}
+
+/**Icon toogle menu **/
+
+.fa-bars {
+  background : rgba(0,0,0,0.5);
+  padding : 0.5rem;
+  border-radius: 2rem;
+}
+
+
+
+
+
+/* style for when scrolling */
+
+.scrolling-active  {
+  background-color: rgba(34, 34, 34, 0.9) ;
+  padding-top: 3px;
+  padding-bottom: 3px;
+
+}
+
+
+
+
+/*
+####################################################
+M E D I A  Q U E R I E S
+####################################################
+*/
+
+/*
+::::::::::::::::::::::::::::::::::::::::::::::::::::
+Bootstrap 4 breakpoints
+*/
+
+@media (max-width: 575.98px) {
+  .nav-link{font-size: 1.2rem;}
+  #slogan {font-size : 1rem ;}
+  .social-menu a,  .fa-bars {margin-left: 1.7vw; font-size : 1.5rem}
+  .fa-bars { font-size : 1.2rem}
+  #right-menu a {font-size : 1.2rem}
+  #left-menu a:hover, #right-menu a:hover {font-weight: bold}
+}
+/* Small devices (landscape phones, 544px and up)  The navbar toggle appears at this breakpoint */
+@media (min-width: 576px) and (max-width: 767.98px) {
+  .nav-link{font-size: 1.5rem;}
+  #slogan {font-size : 1.6rem ;}
+  .social-menu a,  .fa-bars {margin-left: 1.5vw; font-size : 2.6rem}
+  .fa-bars { font-size : 2.2rem}
+  #right-menu a {font-size : 1.5rem}
+  #left-menu a:hover, #right-menu a:hover {font-weight: bold}
+}
+
+/* Medium devices (tablets, 768px and up)*/
+@media (min-width: 768px) and (max-width: 991.98px)  {
+
+  #slogan {font-size : 0.8rem ;}
+  .social-menu a {margin-left: 0.8vw; font-size : 1.5rem}
+  #right-menu a {font-size : 0.8rem ; font-weight: normal;}
+  #left-menu li a {font-size: 0.95em;  text-align: center;}
+  #left-menu li a:hover {
+    text-shadow:0px 0px 0px #fff, 1px 0px 0px #fff, -1px 0px 0px #fff;
+
+  }
+
+
+
+
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+
+  #slogan {font-size : 0.96rem;}
+  .social-menu a {margin-left: 1vw; font-size : 2rem}
+  #left-menu li a {
+
+    font-size: 1em;
+    text-transform: uppercase;
+    text-align: center;
+  }
+  #left-menu li a:hover {
+    text-shadow:0px 0px 0px #fff, 1px 0px 0px #fff, -1px 0px 0px #fff;
+
+  }
+
+
+
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+
+  #slogan {font-size : 1.2rem;}
+  .social-menu a {margin-left: 1.5vw; font-size : 2.5rem}
+  #left-menu li a {
+    font-size: 1.3em;
+    text-transform: uppercase;
+    text-align: center;
+  }
+  #left-menu li a:hover {
+    text-shadow:0px 0px 0px #fff, 1px 0px 0px #fff, -1px 0px 0px #fff;
+
+  }
+
+
+}
+
+
+//::::::::::::::::::::::::::::::::::::::::::::::::::::
+

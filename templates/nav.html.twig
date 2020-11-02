@@ -1,0 +1,92 @@
+
+
+<nav class="navbar nav-bar fixed-top navbar-expand-md" id="navBar">
+
+
+    <div class="container-fluid  justify-content-around ">
+
+        <!--  LOGO  -->
+        <ul id="logo" class="navbar-nav flex-row">
+            <li class="nav-item">
+                <a href={{ path('home') }}>
+                    <img src="{{ asset('images/main/logo.jpg') }}" alt="Accueil" class="d-none d-md-block d-lg-block d-xl-block" width="50" height ="50">
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="navbar-brand ml-1" href={{ path('home') }}>
+                    <span id="slogan" class = "font-weight-bold">Église de Fleurance</span>
+                </a>
+            </li>
+
+        </ul>
+
+
+
+
+        <!-- links toggle -->
+        <button  id="navMenuToggle" class="navbar-toggler order-first" type="button" data-toggle="collapse" data-target="#left-menu, #right-menu" aria-controls="left-menu" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- list of icon for social media -->
+        <ul id="social-menu" class=" navbar-nav social-menu order-xl-6 order-lg-6 order-md-6 flex-row ">
+            <li class="nav-item">
+                <a href="">
+                    <i class="fab fa-facebook-square"></i>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="">
+                    <i class="fab fa-youtube"></i>
+                </a>
+            </li>
+        </ul>
+
+
+        <!-- main navbar links (left) -->
+        <div class="collapse navbar-collapse order-xl-4 order-lg-4 order-md-4" id="left-menu">
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item">
+                    <a class="nav-link"  href={{ path('home') }}>Accueil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Présentation</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Activités</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Agenda</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Médias</a>
+                </li>
+            </ul>
+        </div>
+
+
+        <!-- second navbar links (right)-->
+        <div id="right-menu" class="collapse navbar-collapse order-xl-5 order-lg-5 order-md-5" >
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item">
+                    <a class="btn btn-dark" href={{ path('contact') }}>
+                        Contact
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+
+    </div>
+</nav>
+
+
+

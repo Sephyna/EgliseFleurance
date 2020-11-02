@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Contactez-nous !{% endblock title %}
+
+
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('contact') }}
+{% endblock %}
+{% block body %}
+
+
+    {% include 'contact/headerContact.html.twig' %}
+    <div id="contact" class="container pb-5">
+        <div class="row">
+            <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 col-12">
+                {% include 'contact/formContact.html.twig' %}
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 mt-5 mt-sm-5  mt-md-0 ">
+                {% include 'contact/adressContact.html.twig' %}
+            </div>
+        </div>
+
+    </div>
+
+
+    {% include 'contact/map.html.twig' %}
+
+
+{% endblock %}
