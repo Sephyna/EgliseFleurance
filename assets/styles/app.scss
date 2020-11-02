@@ -1,0 +1,98 @@
+// import bootstrap css
+@import "~bootstrap/scss/bootstrap";
+@import '~@fortawesome/fontawesome-free/css/fontawesome.css';
+@import '~@fortawesome/fontawesome-free/css/regular.css';
+@import '~@fortawesome/fontawesome-free/css/solid.css';
+@import '~@fortawesome/fontawesome-free/css/brands.css';
+
+@import url('https://fonts.googleapis.com/css2?family=Farsan&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=La+Belle+Aurore&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Text:wght@300;400;600;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Arya:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Odibee+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Roboto+Condensed:ital,wght@0,400;0,700;1,300;1,400&display=swap');
+
+.container-fluid-nopadding {
+    width: 100%;
+    padding-right: 0px;
+    padding-left: 0px;
+    margin-right: auto;
+    margin-left: auto;
+
+}
+
+
+ h1 {
+    margin:0px 0px 10px 0px;
+    text-align : center;
+    font-family : 'Roboto Condensed';
+    font-weight: 700;
+    letter-spacing: -2px;
+    padding : 5px ;
+    background : rgb(150, 213, 222);
+
+
+}
+.paragraph-under-h1 {
+  font-family : 'Fira Sans', sans-serif;
+}
+
+ h2 {
+   text-align : center;
+   font-family : 'Big Shoulders Text', sans-serif;
+   letter-spacing: 2px;
+
+ }
+label {
+  font-family : 'Arya', sans-serif;
+}
+
+
+
+
+/*
+####################################################
+M E D I A  Q U E R I E S
+####################################################
+*/
+
+/*
+::::::::::::::::::::::::::::::::::::::::::::::::::::
+Bootstrap 4 breakpoints
+*/
+
+@media (max-width: 575.98px) {
+ .paragraph-under-h1 { font-size : 1em}
+}
+/* Small devices (landscape phones, 544px and up) The navbar toggle appears at this breakpoint*/
+@media (min-width: 576px) and (max-width: 767.98px) {
+  .paragraph-under-h1 { font-size : 1em}
+}
+
+/* Medium devices (tablets, 768px and up)  */
+@media (min-width: 768px) and (max-width: 991.98px)  {
+
+  .paragraph-under-h1 { font-size : 1.3em}
+
+
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+
+  .paragraph-under-h1 { font-size : 1.3em}
+
+
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+  .paragraph-under-h1 { font-size : 1.3em}
+
+
+}
+
+
+//::::::::::::::::::::::::::::::::::::::::::::::::::::
+
