@@ -21,16 +21,16 @@ class HomeController extends AbstractController
     }
 
 
-    /**
-     * @Route("/{titlearticle}")
-     */
-    public function articlepage ($titlearticle)
-    {
-
-        return $this->render('article/show.html.twig' , [
-            'title' =>ucwords(str_replace('-', ' ',$titlearticle))
-        ]);
-
-    }
+//    /**
+//     * @Route("/{titlearticle}")
+//     */
+//    public function articlepage ($titlearticle)
+//    {
+//
+//        return $this->render('article/show.html.twig' , [
+//            'title' =>ucwords(str_replace('-', ' ',$titlearticle))
+//        ]);
+//
+//    }
 
 }

@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block body %}
+
+    <h1> Connexion </h1>
+
+{% include 'flash_messages.html.twig' %}
+<div id="login" class="container pt-5 pb-5">
+    <div class="row">
+        <div class="col-6 mx-auto">
+            {% if error %}
+                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+
+            <input type="submit" value="Connexion" class="btn btn-block btn-primary" />
+            <div class="my-custom-class-for-errors">
+                {{ form_errors(form) }}
+            </div>
+            {{ form_end(form) }}
+            <a href="#"> Mot de passe oublié ? </a>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
