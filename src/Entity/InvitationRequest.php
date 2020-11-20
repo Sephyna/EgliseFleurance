@@ -33,9 +33,9 @@ class InvitationRequest
     private $expires_at;
 
     /**
-     * @ORM\OneToOne(targetEntity=Users::class, inversedBy="invitationRequest", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=User::class, mappedBy="InvitationRequest", cascade={"persist", "remove"})
      */
-    private $users;
+    private $user;
 
 
     public function getId(): ?int
@@ -79,14 +79,20 @@ class InvitationRequest
         return $this;
     }
 
-    public function getUsers(): ?users
+    public function getUser(): ?User
     {
-        return $this->users;
+        return $this->user;
     }
 
-    public function setUsers(?users $users): self
+    public function setUser(?User $user): self
     {
-        $this->users = $users;
+        $this->user = $user;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newInvitationRequest = null === $user ? null : $this;
+        if ($user->getInvitationRequest() !== $newInvitationRequest) {
+            $user->setInvitationRequest($newInvitationRequest);
+        }
 
         return $this;
     }

@@ -28,10 +28,11 @@ class ContactController extends AbstractController
                 ->setFrom($contactFormData['email'])
                 ->setTo('daniel.morata@umc-cse.org')
                 ->setBody (
-                    'Vous avez reçu un message de <b>'. $contactFormData['name'].'</b> sur le site de l\'église de Fleurance. <br> <br>'.
-                    $contactFormData['message'],
+                    $this->renderView(
+                        'emails/contact.html.twig', ['contactFormData' => $contactFormData]                    ),
                     'text/html'
                 );
+
             $mailer->send($message);
             $this->addFlash('info', 'votre message a été envoyé avec succès');
             return $this->redirect($this->generateUrl('contact', ['_fragment'=>'body']));

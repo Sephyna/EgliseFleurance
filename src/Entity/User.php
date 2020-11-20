@@ -2,14 +2,16 @@
 
 namespace App\Entity;
 
-use App\Repository\UsersRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @ORM\Entity(repositoryClass=UsersRepository::class)
+ * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
  */
-class Users implements UserInterface
+class User implements UserInterface
 {
     /**
      * @ORM\Id
@@ -23,7 +25,10 @@ class Users implements UserInterface
      */
     private $email;
 
-
+    /**
+     * @ORM\Column(type="json")
+     */
+    private $roles = [];
 
     /**
      * @var string The hashed password
@@ -31,18 +36,16 @@ class Users implements UserInterface
      */
     private $password;
 
-
+    /**
+     * @ORM\OneToOne(targetEntity=InvitationRequest::class, inversedBy="users", cascade={"persist", "remove"})
+     */
+    private $InvitationRequest;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Roles::class, inversedBy="users")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\Column(type="boolean")
      */
-    private $roles;
+    private $isVerified = false;
 
-    /**
-     * @ORM\OneToOne(targetEntity=InvitationRequest::class, mappedBy="users", cascade={"persist", "remove"})
-     */
-    private $invitationRequest;
 
 
     public function getId(): ?int
@@ -72,6 +75,23 @@ class Users implements UserInterface
         return (string) $this->email;
     }
 
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
 
     /**
      * @see UserInterface
@@ -105,33 +125,26 @@ class Users implements UserInterface
         // $this->plainPassword = null;
     }
 
-
-    public function getRoles(): ?roles
+    public function getInvitationRequest(): ?InvitationRequest
     {
-        return $this->roles;
+        return $this->InvitationRequest;
     }
 
-    public function setRole(?roles $roles): self
+    public function setInvitationRequest(?InvitationRequest $InvitationRequest): self
     {
-        $this->roles = $roles;
+        $this->InvitationRequest = $InvitationRequest;
 
         return $this;
     }
 
-    public function getInvitationRequest(): ?InvitationRequest
+    public function isVerified(): bool
     {
-        return $this->invitationRequest;
+        return $this->isVerified;
     }
 
-    public function setInvitationRequest(?InvitationRequest $invitationRequest): self
+    public function setIsVerified(bool $isVerified): self
     {
-        $this->invitationRequest = $invitationRequest;
-
-        // set (or unset) the owning side of the relation if necessary
-        $newUsers = null === $invitationRequest ? null : $this;
-        if ($invitationRequest->getUsers() !== $newUsers) {
-            $invitationRequest->setUsers($newUsers);
-        }
+        $this->isVerified = $isVerified;
 
         return $this;
     }
