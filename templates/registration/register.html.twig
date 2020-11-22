@@ -1,16 +1,70 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Ajouter un membre{% endblock %}
 
 {% block body %}
+    <h1>Ajouter un membre </h1>
 
-    <h1>Register</h1>
+    <div id="register" class="container pt-4 pb-5">
+        <div class="row">
+            <div class="mx-auto col-sm-10 col-md-8">
+                {% include 'flash_messages.html.twig' %}
+                {{ form_start(registrationForm) }}
+                    {{ form_label(registrationForm.email) }}
+                    {{ form_widget(registrationForm.email) }}
+                    {{ form_label(registrationForm.username) }}
+                    {{ form_widget(registrationForm.username) }}
+                    {{ form_label(registrationForm.phone) }}
+                    <div class = "d-flex">
+                        <div class="col-4 m-0 p-0">
+                            {{ form_widget(registrationForm.phone.country) }}
+                        </div>
+                        <div class="col-8 m-0 p-0">
+                            {{ form_widget(registrationForm.phone.number) }}
+                        </div>
 
-    {% include 'flash_messages.html.twig' %}
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
+                    </div>
 
 
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+
+                    {{ form_label(registrationForm.rolesRadius) }}
+                    <div class="d-flex pb-4">
+                        {% set i = 0 %}
+                        {% for choice in registrationForm.rolesRadius.vars.choices %}
+                            <div class = "form-check flex-fill">
+                                <input
+                                    type="radio" id="{{ registrationForm.rolesRadius.vars.id }}_{{ i }}"
+                                    name="{{ registrationForm.rolesRadius.vars.full_name }}" required="required"
+                                    class="form-check-input" value="{{ choice.value }}"
+                                    {% if i is same as(0) %}
+                                        checked="checked"
+                                    {% endif %}
+                                >
+                                <label
+                                    class="form-check-label required" for="{{ registrationForm.rolesRadius.vars.id }}_{{ i }}">
+                                    {{ choice.label }}
+                                </label>
+                            </div>
+                            {% set i = i + 1 %}
+                        {% endfor %}
+                    </div>
+                    {{ form_help(registrationForm.rolesRadius) }}
+                    {% do registrationForm.email.setRendered() %}
+                    {% do registrationForm.username.setRendered() %}
+                    {% do registrationForm.phone.setRendered() %}
+                    {% do registrationForm.rolesRadius.setRendered() %}
+
+                    {{ form_widget(registrationForm) }}
+                    <input type="submit" class="btn btn-block btn-primary" />
+                    <div class="my-custom-class-for-errors">
+                        {{ form_errors(registrationForm) }}
+                    </div>
+                {{ form_end(registrationForm) }}
+
+
+            </div>
+        </div>
+    </div>
+
+
 {% endblock %}

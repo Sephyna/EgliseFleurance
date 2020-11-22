@@ -100,6 +100,8 @@ $(document).ready(function() {
     $('#redirection').click(function() {
         $('html,body').animate({scrollTop: $("#body").offset().top}, 'slow'      );
     });
+    onUserScrolling();
+    onWindowResize();
 });
 
 

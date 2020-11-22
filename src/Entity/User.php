@@ -4,12 +4,14 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use libphonenumber\PhoneNumber;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
+ * @UniqueEntity(fields={"email"}, message="Il existe déjà un compte avec cet email.")
  */
 class User implements UserInterface
 {
@@ -17,34 +19,106 @@ class User implements UserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Assert\Type("int")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\Type("string")
+     * @Assert\Email(
+     *     message = "L'email '{{ value }}' n'est pas valide."
+     * )
+     * @Assert\Length(
+     *      min = 5,
+     *      max = 180,
+     *      minMessage = "L'email doit au moins faire {{ limit }} caractères.",
+     *      maxMessage = "L'email doit fait au maximum {{ limit }} caractères.",
+     *      allowEmptyString = false
+     * )
+     * @Assert\NotBlank(message="Veuillez renseigner un email.")
+     * @Assert\NotNull(message="Veuillez renseigner un email.")
+     * @Assert\Regex(
+     * pattern = "/^[^\W][a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\@[a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\.[a-zA-Z]{2,4}$/ ",
+     * match=true,
+     * message="L'adresse mail n'est pas valide")
      */
     private $email;
 
     /**
      * @ORM\Column(type="json")
+     * @Assert\Type("array")
+     * @Assert\NotBlank(message="Veuilpopolez ajouter un rôle.")
+     * @Assert\NotNull(message="Veuillez ajouter un rôle.")
      */
     private $roles = [];
 
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Assert\Type("string")
+     * @Assert\Length(
+     *      min = 5,
+     *      max = 255,
+     *      minMessage = "Le mot de passe doit au moins faire {{ limit }} caractères.",
+     *      maxMessage = "Le mot de passe doit fait au maximum {{ limit }} caractères.",
+     *      allowEmptyString = false
+     * )
+     * @Assert\NotBlank(message="Veuillez renseigner un mot de passe.")
+     * @Assert\NotNull(message="Veuillez renseigner un mot de passe.")
+     *
+     * @Assert\Regex(
+     * pattern = "/^(?=.*\d)(?=.*[A-Z])(?=.*[@#$%])(?!.*(.)\1{2}).*[a-z]/m",
+     * match=true,
+     * message="Votre mot de passe doit comporter au moins huit caractères, dont des lettres majuscules et minuscules, un chiffre et un symbole.")
      */
+
     private $password;
 
-    /**
-     * @ORM\OneToOne(targetEntity=InvitationRequest::class, inversedBy="users", cascade={"persist", "remove"})
-     */
-    private $InvitationRequest;
 
     /**
      * @ORM\Column(type="boolean")
+     * @Assert\Type(type="bool")
+     * @Assert\NotNull
      */
     private $isVerified = false;
+
+    /**
+     * @ORM\Column(type="phone_number")
+     * @Assert\Type (
+     *     type = "phone_number",
+     *      message = "ta mère"
+     * )
+     *
+     * @Assert\NotBlank(message="Veuillez renseigner un numéro de téléphone.")
+     * @Assert\NotNull(message="Veuillez renseigner  un numéro de téléphone.")
+     *
+     * @Assert\Regex(
+     * pattern = "/^\+(?:[0-9] ?){6,14}[0-9]$/",
+     * match=true,
+     * message="{{ value }} n'est pas un numéro de téléphone valide.")
+     */
+    private $phone;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\Type("string")
+     * @Assert\Length(
+     *      min = 1,
+     *      max = 255,
+     *      minMessage = "Veuillez renseigner un nom d'au moins {{ limit }} caractères.",
+     *      maxMessage = "Veuillez renseigner un nom d'au maximum {{ limit }} caractères.",
+     *      allowEmptyString = false
+     * )
+     * @Assert\NotBlank(message="Veuillez renseigner un nom.")
+     * @Assert\NotNull(message="Veuillez renseigner  un nom.")
+     * @Assert\Regex(
+     *     pattern="/\d/",
+     *     match=false,
+     *     message="Le nom ne peux pas contenir de nombre."
+     * )
+     */
+    private $username;
 
 
 
@@ -66,14 +140,13 @@ class User implements UserInterface
     }
 
     /**
-     * A visual identifier that represents this user.
-     *
      * @see UserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->email;
+        return $this->username;
     }
+
 
     /**
      * @see UserInterface
@@ -125,17 +198,6 @@ class User implements UserInterface
         // $this->plainPassword = null;
     }
 
-    public function getInvitationRequest(): ?InvitationRequest
-    {
-        return $this->InvitationRequest;
-    }
-
-    public function setInvitationRequest(?InvitationRequest $InvitationRequest): self
-    {
-        $this->InvitationRequest = $InvitationRequest;
-
-        return $this;
-    }
 
     public function isVerified(): bool
     {
@@ -145,6 +207,26 @@ class User implements UserInterface
     public function setIsVerified(bool $isVerified): self
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function getPhone(): ?PhoneNumber
+    {
+
+        return $this->phone;
+    }
+
+    public function setPhone(PhoneNumber $phone): self
+    {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    public function setUsername(string $username): self
+    {
+        $this->username = $username;
 
         return $this;
     }

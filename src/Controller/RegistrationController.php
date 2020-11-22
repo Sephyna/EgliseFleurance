@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\InvitationRequest;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Security\EmailVerifier;
@@ -31,19 +30,53 @@ class RegistrationController extends AbstractController
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
         $user = new User();
-        $invitation = new InvitationRequest();
+        // create a random password when registering a member by an admin
+        $randomPassword = random_bytes(10);
+        $user->setPassword(
+            $passwordEncoder->encodePassword(
+                $user,
+                $randomPassword
+            )
+        );
+        // Default role
+        $user->setRoles([
+            "ROLE_USER"
+        ])
+        ;
+        //
+        $user->setIsVerified(false);
+
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // create a random password when registering a member by an admin
-            $randomPassword = random_bytes(10);
-            $user->setPassword(
-                $passwordEncoder->encodePassword(
-                    $user,
-                    $randomPassword
-                )
-            );
+
+
+            // Roles
+            if($form->get("rolesRadius")->getData() === "ADMIN")
+            {
+                $user->setRoles([
+                    "ROLE_ADMIN",
+                    "ROLE_MODERATOR",
+                    "ROLE_USER"
+                ])
+                ;
+            }
+            else if ($form->get("rolesRadius")->getData() === "MODERATOR")
+            {
+                $user->setRoles([
+                    "ROLE_MODERATOR",
+                    "ROLE_USER"
+                ])
+                ;
+            }
+            else
+            {
+                $user->setRoles([
+                    "ROLE_USER"
+                ])
+                ;
+            }
 
 
             $entityManager = $this->getDoctrine()->getManager();
@@ -59,7 +92,7 @@ class RegistrationController extends AbstractController
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
             // do anything else you need here, like send an email
-            $this->addFlash('success', 'Vous avez bien envoyé un mail d`\'inscription à l\'adresse <b>'.$user->getUsername().'</b>');
+            $this->addFlash('success', 'Vous avez bien envoyé un mail d\'inscription à l\'adresse <b>'.$user->getEmail().'</b>');
 
             return $this->redirectToRoute('app_register');
         }
@@ -74,7 +107,7 @@ class RegistrationController extends AbstractController
      */
     public function verifyUserEmail(Request $request): Response
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+//        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         // validate email confirmation link, sets User::isVerified=true and persists
         try {
@@ -84,6 +117,7 @@ class RegistrationController extends AbstractController
 
             return $this->redirectToRoute('home');
         }
+        $this->addFlash('verify_email_error', 'jai reussi');
 
         // @TODO Change the redirect on success and handle or remove the flash message in your templates
 //        $this->addFlash('success', 'Bonjour '.$user->getUsername().', vous êtes bien inscrit comme ' .$user->getRoles(). ' sur le site ! ');
