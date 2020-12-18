@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Choisissez un mot de passe{% endblock %}
+
+{% block body %}
+    <h1>Définir votre mot de passe</h1>
+
+    <div id="register" class="container pt-1 pb-5 mb-5 ">
+        <div class="row">
+            <div class="bg-light mx-auto pl-3 pr-3 col-11 col-sm-10 col-md-8 pt-3 pb-5 mt-5 mb-4 border shadow pl-5 pr-5">
+                {% include 'flash_messages.html.twig' %}
+                {{ form_start(form) }}
+                {{ form_label(form.email) }}
+                {{ form_widget(form.email) }}
+                {{ form_label(form.phone) }}
+                <div class = "d-flex">
+                    <div class="col-4 m-0 p-0">
+                        {{ form_widget(form.phone.country) }}
+                    </div>
+                    <div class="col-8 m-0 p-0">
+                        {{ form_widget(form.phone.number) }}
+                    </div>
+
+                </div>
+
+                {{ form_widget(form.plainPassword) }}
+
+
+
+
+
+                {% do form.email.setRendered() %}
+                {% do form.phone.setRendered() %}
+                {% do form.plainPassword.setRendered() %}
+
+                {{ form_widget(form) }}
+                <input type="submit" class="btn btn-block btn-primary" />
+                <div class="my-custom-class-for-errors">
+                    {{ form_errors(form) }}
+                </div>
+                {{ form_end(form) }}
+
+
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

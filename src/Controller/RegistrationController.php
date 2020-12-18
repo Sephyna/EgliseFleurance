@@ -3,7 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\ChangePasswordFormType;
+use App\Form\FirstConnectionType;
 use App\Form\RegistrationFormType;
+use App\Form\ResetPasswordRequestFormType;
 use App\Security\EmailVerifier;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -105,23 +108,52 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/verify/email", name="app_verify_email")
      */
-    public function verifyUserEmail(Request $request): Response
+    public function verifyUserEmail(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
-//        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $user = new User();
+        $form = $this->createForm(FirstConnectionType::class);
 
-        // validate email confirmation link, sets User::isVerified=true and persists
-        try {
-            $this->emailVerifier->handleEmailConfirmation($request, $this->getUser());
-        } catch (VerifyEmailExceptionInterface $exception) {
-            $this->addFlash('verify_email_error', $exception->getReason());
 
-            return $this->redirectToRoute('home');
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $emailForm = $form->get('email')->getData();
+            dump($emailForm);
+//            // Encode the plain password, and set it.
+//            $encodedPassword = $passwordEncoder->encodePassword(
+//                $user,
+//                $form->get('plainPassword')->getData()
+//            );
+//
+//            $user->setPassword($encodedPassword);
+//            $this->getDoctrine()->getManager()->flush();
+//
+//            // The session is cleaned up after the password has been changed.
+//            $this->cleanSessionAfterReset();
+//
+//            return $this->redirectToRoute('home');
+            $this->addFlash('success', 'l\'adresse <b>'.$emailForm.'</b>');
+
         }
-        $this->addFlash('verify_email_error', 'jai reussi');
 
-        // @TODO Change the redirect on success and handle or remove the flash message in your templates
-//        $this->addFlash('success', 'Bonjour '.$user->getUsername().', vous êtes bien inscrit comme ' .$user->getRoles(). ' sur le site ! ');
-
-        return $this->redirectToRoute('home');
+        return $this->render('registration/firstconnection.html.twig', [
+            'form' => $form->createView(),
+        ]);
+////        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+//
+//        // validate email confirmation link, sets User::isVerified=true and persists
+//        try {
+//            $this->emailVerifier->handleEmailConfirmation($request, $this->getUser());
+//        } catch (VerifyEmailExceptionInterface $exception) {
+//            $this->addFlash('verify_email_error', $exception->getReason());
+//
+//            return $this->redirectToRoute('home');
+//        }
+//        $this->addFlash('verify_email_error', 'jai reussi');
+//
+//        // @TODO Change the redirect on success and handle or remove the flash message in your templates
+////        $this->addFlash('success', 'Bonjour '.$user->getUsername().', vous êtes bien inscrit comme ' .$user->getRoles(). ' sur le site ! ');
+//
+//        return $this->redirectToRoute('home');
     }
 }

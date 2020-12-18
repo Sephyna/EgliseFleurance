@@ -48,7 +48,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="json")
      * @Assert\Type("array")
-     * @Assert\NotBlank(message="Veuilpopolez ajouter un rôle.")
+     * @Assert\NotBlank(message="Veuillez ajouter un rôle.")
      * @Assert\NotNull(message="Veuillez ajouter un rôle.")
      */
     private $roles = [];
@@ -85,18 +85,10 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="phone_number")
-     * @Assert\Type (
-     *     type = "phone_number",
-     *      message = "ta mère"
-     * )
      *
      * @Assert\NotBlank(message="Veuillez renseigner un numéro de téléphone.")
      * @Assert\NotNull(message="Veuillez renseigner  un numéro de téléphone.")
      *
-     * @Assert\Regex(
-     * pattern = "/^\+(?:[0-9] ?){6,14}[0-9]$/",
-     * match=true,
-     * message="{{ value }} n'est pas un numéro de téléphone valide.")
      */
     private $phone;
 

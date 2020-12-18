@@ -29,7 +29,7 @@ class ContactController extends AbstractController
                 ->setTo('daniel.morata@umc-cse.org')
                 ->setBody (
                     $this->renderView(
-                        'emails/contact.html.twig', ['contactFormData' => $contactFormData]                    ),
+                        'contact/email.html.twig', ['contactFormData' => $contactFormData]                    ),
                     'text/html'
                 );
 

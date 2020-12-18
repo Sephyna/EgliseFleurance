@@ -44,7 +44,7 @@
    letter-spacing: 2px;
 
  }
-label {
+label  {
   font-family : 'Arya', sans-serif;
 }
 
@@ -95,4 +95,8 @@ Bootstrap 4 breakpoints
 
 
 //::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+.col-form-label {
+  font-family : 'Arya', sans-serif;
+}
 
